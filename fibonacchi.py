@@ -1,4 +1,5 @@
 import sys
+from argparse import ArgumentParser 
 
 def exit():
     print('Thanks for playng!')
@@ -25,16 +26,16 @@ def fibonacchi(nth, outputFile):
     secondToLastNumber = 0
     lastNumber = 1
     fibNumbersCalculated = 2
+
+    resulttr = ''
     
     while True:
         nextNumber = secondToLastNumber + lastNumber
         fibNumbersCalculated += 1
 
-        print(nextNumber, end='')
+        resulttr += nextNumber, ' '
         
         if fibNumbersCalculated == nth:
-            print()
-            print()
             print('The #', fibNumbersCalculated, ' Fibonacci ',
                   'number is ', nextNumber, sep='')
             break
@@ -42,6 +43,13 @@ def fibonacchi(nth, outputFile):
         print(', ', end='')
         secondToLastNumber = lastNumber
         lastNumber = nextNumber
+
+    if outputFile:
+        pass
+        resulttr
+    else:
+        pass
+        #print to comsole
 
 def printIntro():
     print('''Fibonacci Sequence, by Al Sweigart al@inventwithpyton.com
@@ -52,9 +60,30 @@ def printIntro():
 
 def main():
 
-    printIntro()
+    parser = ArgumentParser()
+    parser.add_argument("-n", "--number", type = int, help='fibonacchi number limit')
+    parser.add_argument('-o', '--output', type= str, help='output file')
+    parser.add_argument('-b', '--benchmark', type= bool, help='calculate program datetime in milliseconds')
 
+    args = parser.parse_args()
     nth = -1
+
+    outputFile = None
+
+    if args.number:
+        nth = args.number
+
+    if args.output:
+        outputFile = args.output
+
+    print('o: {}'.format(outputFile))
+    
+    
+    #print('args: {}'.format(args))
+    #pass
+   #return
+
+    printIntro()
 
     once = False
     outputFile = False
@@ -63,6 +92,7 @@ def main():
     # parseArguments
     
     while True:
+        
         print()
 
         if nth < 0:
@@ -94,7 +124,7 @@ def main():
         # startTime = date now() 
         fibonacchi(nth, outputFile)
         # endTime = date now()
-        # total = endTime - newTime
+        # total = endTime - startTime
         if benchmark:
             if outputFile: 
                 pass # написать время в файл
